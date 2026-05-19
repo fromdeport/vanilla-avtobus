@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVTOBUS.UZ - Online Booking System</title>
+    <title>AVTOBUS NEO - Smart Booking System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Courier+Prime:wght@400;700&display=swap');
 
@@ -13,18 +13,23 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg: #0b1020;
+            --bg2: #111a32;
+            --card: rgba(10, 18, 40, 0.8);
+            --text: #d8f3ff;
+            --muted: #8cc7dd;
+            --accent: #7c5cff;
+            --accent2: #22d3ee;
+            --ok: #3be88f;
+            --warn: #ffd166;
+            --danger: #ff5d8f;
+        }
+
         body {
-            background: #000080;
-            background-image:
-                repeating-linear-gradient(
-                    0deg,
-                    transparent,
-                    transparent 2px,
-                    rgba(0, 255, 255, 0.03) 2px,
-                    rgba(0, 255, 255, 0.03) 4px
-                );
+            background: radial-gradient(circle at 10% 10%, #1f2f5f 0%, var(--bg) 35%, #070b17 100%);
             font-family: 'Courier Prime', monospace;
-            color: #00ff00;
+            color: var(--text);
             overflow-x: hidden;
         }
 
@@ -35,8 +40,8 @@
         }
 
         .marquee-container {
-            background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
-            border: 3px solid #00ff00;
+            background: linear-gradient(90deg, rgba(124,92,255,.8), rgba(34,211,238,.8), rgba(59,232,143,.8), rgba(124,92,255,.8));
+            border: 1px solid rgba(255,255,255,.25);
             padding: 5px;
             margin-bottom: 20px;
             overflow: hidden;
@@ -65,18 +70,15 @@
         h1 {
             font-family: 'Press Start 2P', cursive;
             font-size: 42px;
-            color: #00ffff;
-            text-shadow:
-                0 0 3px #00ffff,
-                3px 3px 0px #ff00ff;
+            color: #fff;
+            text-shadow: 0 8px 30px rgba(124,92,255,.6);
             margin-bottom: 15px;
         }
 
         .subtitle {
             font-family: 'VT323', monospace;
             font-size: 24px;
-            color: #ffff00;
-            text-shadow: 2px 2px 0px #ff00ff;
+            color: var(--muted);
         }
 
         .counter {
@@ -92,8 +94,8 @@
         }
 
         nav {
-            background: linear-gradient(180deg, #008080, #004040);
-            border: 3px ridge #00ffff;
+            background: linear-gradient(180deg, rgba(21,31,62,.9), rgba(14,20,41,.9));
+            border: 1px solid rgba(255,255,255,.2);
             padding: 15px;
             margin-bottom: 25px;
             box-shadow: 5px 5px 0px #ff00ff;
@@ -108,28 +110,27 @@
         }
 
         nav a {
-            color: #ffff00;
+            color: var(--text);
             text-decoration: none;
             font-family: 'VT323', monospace;
             font-size: 20px;
             padding: 8px 15px;
-            border: 2px outset #00ff00;
-            background: #006666;
+            border: 1px solid rgba(255,255,255,.2);
+            background: rgba(255,255,255,.06);
             display: inline-block;
             transition: all 0.1s;
             cursor: pointer;
         }
 
         nav a:hover, nav a.active {
-            background: #00ffff;
-            color: #000;
-            border-style: inset;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            color: #fff;
             transform: translateY(2px);
         }
 
         .main-content {
-            background: rgba(0, 0, 0, 0.7);
-            border: 3px solid #00ff00;
+            background: var(--card);
+            border: 1px solid rgba(255,255,255,.18);
             padding: 25px;
             margin-bottom: 20px;
             box-shadow:
@@ -184,9 +185,9 @@
         }
 
         .btn-y2k {
-            background: linear-gradient(180deg, #00ff00, #008000);
-            border: 3px outset #00ff00;
-            color: #000;
+            background: linear-gradient(180deg, var(--accent2), var(--accent));
+            border: 1px solid rgba(255,255,255,.35);
+            color: #fff;
             padding: 12px 25px;
             font-family: 'VT323', monospace;
             font-size: 22px;
@@ -195,15 +196,14 @@
             text-decoration: none;
             display: inline-block;
             margin: 5px;
-            box-shadow: 3px 3px 0px #004000;
+            box-shadow: 0 10px 30px rgba(0,0,0,.25);
             transition: all 0.1s;
         }
 
         .btn-y2k:hover {
-            background: linear-gradient(180deg, #ffff00, #ff8800);
-            border-style: inset;
+            background: linear-gradient(180deg, #8ef9ff, #8165ff);
             transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #004000;
+            box-shadow: 0 6px 18px rgba(124,92,255,.5);
         }
 
         .bus-card {
@@ -473,9 +473,10 @@
 
     <div class="container">
         <header>
-            <h1>AVTOBUS.UZ</h1>
-            <p class="subtitle">[ Online Booking System ]</p>
+            <h1>AVTOBUS NEO</h1>
+            <p class="subtitle">[ Adaptive Booking System ]</p>
             <div class="counter">VISITORS: 00012847</div>
+            <button class="btn-y2k" onclick="toggleTheme()">[THEME] SWITCH MODE</button>
         </header>
 
         <nav>
@@ -631,7 +632,11 @@
             const results = document.getElementById('busResults');
             results.innerHTML = '<h2 style="font-size: 20px; margin: 30px 0; color: #00ffff;">[RESULTS] DOSTUPNYE REISY:</h2>';
 
-            const sortedBuses = [...buses].sort((a, b) => a.price - b.price);
+            const isWeekend = [0, 6].includes(new Date(date).getDay());
+            const sortedBuses = [...buses].map(bus => ({
+                ...bus,
+                dynamicPrice: Math.round(bus.price * (isWeekend ? 1.15 : 1))
+            })).sort((a, b) => a.dynamicPrice - b.dynamicPrice);
             sortedBuses.forEach(bus => {
                 const booked = getTakenSeats(bus.id, date);
                 const available = bus.seats - booked.length;
@@ -640,7 +645,7 @@
                     <div class="bus-card">
                         <div class="bus-header">
                             <div class="bus-time">${bus.time}</div>
-                            <div class="bus-price">${bus.price.toLocaleString()} UZS</div>
+                            <div class="bus-price">${bus.dynamicPrice.toLocaleString()} UZS ${isWeekend ? '<span style="font-size:14px;color:#ffd166;">WEEKEND</span>' : ''}</div>
                         </div>
                         <div class="bus-info">>>> Kompaniya: ${bus.company}</div>
                         <div class="bus-info">>>> Vremya v puti: ${bus.duration}</div>
@@ -656,7 +661,8 @@
 
         function selectBus(busId, date, from, to) {
             const bus = buses.find(b => b.id === busId);
-            storage.selectedBus = { ...bus, date, from, to };
+            const isWeekend = [0, 6].includes(new Date(date).getDay());
+            storage.selectedBus = { ...bus, date, from, to, price: Math.round(bus.price * (isWeekend ? 1.15 : 1)) };
             storage.selectedSeats = [];
             
             showPage('booking');
@@ -1014,6 +1020,28 @@
         }
 
         document.getElementById('date').valueAsDate = new Date();
+
+        function toggleTheme() {
+            const root = document.documentElement;
+            const dark = getComputedStyle(root).getPropertyValue('--bg').trim() === '#0b1020';
+            if (dark) {
+                root.style.setProperty('--bg', '#f8fafc');
+                root.style.setProperty('--bg2', '#e2e8f0');
+                root.style.setProperty('--card', 'rgba(255,255,255,0.9)');
+                root.style.setProperty('--text', '#0f172a');
+                root.style.setProperty('--muted', '#475569');
+                root.style.setProperty('--accent', '#2563eb');
+                root.style.setProperty('--accent2', '#0891b2');
+            } else {
+                root.style.setProperty('--bg', '#0b1020');
+                root.style.setProperty('--bg2', '#111a32');
+                root.style.setProperty('--card', 'rgba(10, 18, 40, 0.8)');
+                root.style.setProperty('--text', '#d8f3ff');
+                root.style.setProperty('--muted', '#8cc7dd');
+                root.style.setProperty('--accent', '#7c5cff');
+                root.style.setProperty('--accent2', '#22d3ee');
+            }
+        }
 
         document.addEventListener('input', (event) => {
             if (event.target.id === 'phone') {
