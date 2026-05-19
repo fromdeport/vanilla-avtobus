@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVTOBUS.UZ - Online Booking System</title>
     <title>AVTOBUS NEO - Smart Booking System</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Courier+Prime:wght@400;700&display=swap');
@@ -27,8 +28,18 @@
         }
 
         body {
+            background: #000080;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 255, 0.03) 2px,
+                    rgba(0, 255, 255, 0.03) 4px
+                );
             background: radial-gradient(circle at 10% 10%, #1f2f5f 0%, var(--bg) 35%, #070b17 100%);
             font-family: 'Courier Prime', monospace;
+            color: #00ff00;
             color: var(--text);
             overflow-x: hidden;
         }
@@ -40,6 +51,8 @@
         }
 
         .marquee-container {
+            background: linear-gradient(90deg, #ff00ff, #00ffff, #ffff00, #ff00ff);
+            border: 3px solid #00ff00;
             background: linear-gradient(90deg, rgba(124,92,255,.8), rgba(34,211,238,.8), rgba(59,232,143,.8), rgba(124,92,255,.8));
             border: 1px solid rgba(255,255,255,.25);
             padding: 5px;
@@ -70,6 +83,10 @@
         h1 {
             font-family: 'Press Start 2P', cursive;
             font-size: 42px;
+            color: #00ffff;
+            text-shadow:
+                0 0 3px #00ffff,
+                3px 3px 0px #ff00ff;
             color: #fff;
             text-shadow: 0 8px 30px rgba(124,92,255,.6);
             margin-bottom: 15px;
@@ -78,6 +95,8 @@
         .subtitle {
             font-family: 'VT323', monospace;
             font-size: 24px;
+            color: #ffff00;
+            text-shadow: 2px 2px 0px #ff00ff;
             color: var(--muted);
         }
 
@@ -94,6 +113,8 @@
         }
 
         nav {
+            background: linear-gradient(180deg, #008080, #004040);
+            border: 3px ridge #00ffff;
             background: linear-gradient(180deg, rgba(21,31,62,.9), rgba(14,20,41,.9));
             border: 1px solid rgba(255,255,255,.2);
             padding: 15px;
@@ -110,11 +131,14 @@
         }
 
         nav a {
+            color: #ffff00;
             color: var(--text);
             text-decoration: none;
             font-family: 'VT323', monospace;
             font-size: 20px;
             padding: 8px 15px;
+            border: 2px outset #00ff00;
+            background: #006666;
             border: 1px solid rgba(255,255,255,.2);
             background: rgba(255,255,255,.06);
             display: inline-block;
@@ -123,12 +147,17 @@
         }
 
         nav a:hover, nav a.active {
+            background: #00ffff;
+            color: #000;
+            border-style: inset;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             color: #fff;
             transform: translateY(2px);
         }
 
         .main-content {
+            background: rgba(0, 0, 0, 0.7);
+            border: 3px solid #00ff00;
             background: var(--card);
             border: 1px solid rgba(255,255,255,.18);
             padding: 25px;
@@ -156,10 +185,7 @@
             display: block;
         }
 
-        .form-group {
-            margin-bottom: 15px;
-        }
-
+@@ -162,70 +163,69 @@
         label {
             display: block;
             font-family: 'VT323', monospace;
@@ -185,6 +211,9 @@
         }
 
         .btn-y2k {
+            background: linear-gradient(180deg, #00ff00, #008000);
+            border: 3px outset #00ff00;
+            color: #000;
             background: linear-gradient(180deg, var(--accent2), var(--accent));
             border: 1px solid rgba(255,255,255,.35);
             color: #fff;
@@ -196,13 +225,17 @@
             text-decoration: none;
             display: inline-block;
             margin: 5px;
+            box-shadow: 3px 3px 0px #004000;
             box-shadow: 0 10px 30px rgba(0,0,0,.25);
             transition: all 0.1s;
         }
 
         .btn-y2k:hover {
+            background: linear-gradient(180deg, #ffff00, #ff8800);
+            border-style: inset;
             background: linear-gradient(180deg, #8ef9ff, #8165ff);
             transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #004000;
             box-shadow: 0 6px 18px rgba(124,92,255,.5);
         }
 
@@ -229,225 +262,7 @@
 
         .bus-time {
             font-family: 'Press Start 2P', cursive;
-            font-size: 28px;
-            color: #ffff00;
-            text-shadow: 2px 2px 0px #ff00ff;
-        }
-
-        .bus-price {
-            font-family: 'VT323', monospace;
-            font-size: 24px;
-            color: #00ff00;
-            font-weight: bold;
-        }
-
-        .bus-info {
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-            color: #00ffff;
-            margin: 5px 0;
-        }
-
-        .seat-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .seat {
-            padding: 15px;
-            border: 2px solid #00ff00;
-            text-align: center;
-            cursor: pointer;
-            background: rgba(0, 255, 0, 0.2);
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-            font-weight: bold;
-            color: #00ff00;
-            transition: all 0.2s;
-        }
-
-        .seat:hover:not(.taken) {
-            background: rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
-        }
-
-        .seat.taken {
-            background: rgba(255, 0, 255, 0.3);
-            border-color: #ff00ff;
-            cursor: not-allowed;
-            color: #ff00ff;
-        }
-
-        .seat.selected {
-            background: rgba(255, 255, 0, 0.4);
-            border-color: #ffff00;
-            box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
-            color: #ffff00;
-        }
-
-        .summary {
-            background: rgba(128, 0, 128, 0.3);
-            border: 3px groove #ff00ff;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .summary h3 {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 18px;
-            color: #00ffff;
-            margin-bottom: 15px;
-        }
-
-        .summary-item {
-            display: flex;
-            justify-content: space-between;
-            margin: 10px 0;
-            font-family: 'VT323', monospace;
-            font-size: 20px;
-            color: #00ff00;
-        }
-
-        .total {
-            font-family: 'Press Start 2P', cursive;
-            font-size: 20px;
-            color: #ffff00;
-            border-top: 2px solid #00ffff;
-            padding-top: 15px;
-            margin-top: 15px;
-            text-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
-        }
-
-        .success-message {
-            background: rgba(0, 255, 0, 0.2);
-            border: 3px solid #00ff00;
-            padding: 30px;
-            text-align: center;
-            margin: 20px 0;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.6);
-        }
-
-        .success-message h2 {
-            color: #00ff00;
-            font-size: 28px;
-            margin-bottom: 20px;
-            border: none;
-        }
-
-        .blink {
-            animation: blink 1.5s linear infinite;
-        }
-
-        @keyframes blink {
-            50% { opacity: 0; }
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-
-        th, td {
-            border: 2px solid #00ffff;
-            padding: 12px;
-            text-align: left;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-        }
-
-        th {
-            background: rgba(128, 0, 128, 0.5);
-            color: #ffff00;
-            font-weight: bold;
-        }
-
-        td {
-            background: rgba(0, 0, 0, 0.5);
-            color: #00ff00;
-        }
-
-        .star {
-            position: fixed;
-            width: 2px;
-            height: 2px;
-            background: #fff;
-            border-radius: 50%;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
-        }
-
-        .sparkle {
-            display: inline-block;
-            animation: sparkle 1s ease-in-out infinite;
-        }
-
-        @keyframes sparkle {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.2) rotate(180deg); }
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #ff00ff;
-            margin-top: 30px;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-            color: #00ffff;
-        }
-
-        .legend {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 15px;
-            border: 2px solid #00ff00;
-            margin-bottom: 20px;
-        }
-
-        .legend-item {
-            display: inline-block;
-            margin-right: 20px;
-            font-family: 'VT323', monospace;
-            font-size: 18px;
-        }
-
-        .legend-box {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 2px solid;
-            vertical-align: middle;
-            margin-right: 5px;
-        }
-
-        .processing {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .processing h2 {
-            font-size: 32px;
-            color: #00ffff;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 28px;
-            }
-
-            .seat-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 5px;
-            }
-
+@@ -451,53 +451,54 @@
             .seat {
                 padding: 10px;
                 font-size: 16px;
@@ -473,6 +288,8 @@
 
     <div class="container">
         <header>
+            <h1>AVTOBUS.UZ</h1>
+            <p class="subtitle">[ Online Booking System ]</p>
             <h1>AVTOBUS NEO</h1>
             <p class="subtitle">[ Adaptive Booking System ]</p>
             <div class="counter">VISITORS: 00012847</div>
@@ -502,45 +319,7 @@
                         <option value="Farg'ona">Farg'ona</option>
                         <option value="Namangan">Namangan</option>
                         <option value="Navoiy">Navoiy</option>
-                        <option value="Qarshi">Qarshi</option>
-                        <option value="Termiz">Termiz</option>
-                        <option value="Guliston">Guliston</option>
-                        <option value="Jizzax">Jizzax</option>
-                        <option value="Nukus">Nukus</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>[TO] KUDA:</label>
-                    <select id="to">
-                        <option value="Toshkent">Toshkent</option>
-                        <option value="Samarqand">Samarqand</option>
-                        <option value="Buxoro">Buxoro</option>
-                        <option value="Andijon">Andijon</option>
-                        <option value="Farg'ona">Farg'ona</option>
-                        <option value="Namangan">Namangan</option>
-                        <option value="Navoiy" selected>Navoiy</option>
-                        <option value="Qarshi">Qarshi</option>
-                        <option value="Termiz">Termiz</option>
-                        <option value="Guliston">Guliston</option>
-                        <option value="Jizzax">Jizzax</option>
-                        <option value="Nukus">Nukus</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>[DATE] DATA POEZDKI:</label>
-                    <input type="date" id="date">
-                </div>
-
-                <button class="btn-y2k" onclick="searchBuses()">[SEARCH] NAITI AVTOBUSY</button>
-
-                <div id="busResults"></div>
-            </div>
-
-            <div id="booking" class="page">
-                <h2><span class="sparkle">+</span> VYBOR MEST <span class="sparkle">+</span></h2>
-                <div id="bookingContent"></div>
+@@ -543,60 +544,64 @@
             </div>
 
             <div id="payment" class="page">
@@ -566,6 +345,7 @@
             selectedBus: null,
             selectedSeats: [],
             passengerData: null,
+            tickets: []
             tickets: JSON.parse(localStorage.getItem('tickets_history') || '[]')
         };
 
@@ -605,8 +385,7 @@
 
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
+@@ -605,84 +610,94 @@
             document.querySelector(`[data-page="${pageId}"]`).classList.add('active');
 
             if (pageId === 'tickets') {
@@ -632,6 +411,7 @@
             const results = document.getElementById('busResults');
             results.innerHTML = '<h2 style="font-size: 20px; margin: 30px 0; color: #00ffff;">[RESULTS] DOSTUPNYE REISY:</h2>';
 
+            buses.forEach(bus => {
             const isWeekend = [0, 6].includes(new Date(date).getDay());
             const sortedBuses = [...buses].map(bus => ({
                 ...bus,
@@ -645,12 +425,14 @@
                     <div class="bus-card">
                         <div class="bus-header">
                             <div class="bus-time">${bus.time}</div>
+                            <div class="bus-price">${bus.price.toLocaleString()} UZS</div>
                             <div class="bus-price">${bus.dynamicPrice.toLocaleString()} UZS ${isWeekend ? '<span style="font-size:14px;color:#ffd166;">WEEKEND</span>' : ''}</div>
                         </div>
                         <div class="bus-info">>>> Kompaniya: ${bus.company}</div>
                         <div class="bus-info">>>> Vremya v puti: ${bus.duration}</div>
                         <div class="bus-info">>>> Svobodnykh mest: ${available}/${bus.seats}</div>
                         <div class="bus-info">>>> Marshrut: ${from} -> ${to}</div>
+                        <button class="btn-y2k" onclick="selectBus(${bus.id}, '${date}', '${from}', '${to}')">
                         <button class="btn-y2k" onclick="selectBus(${bus.id}, '${date}', '${from}', '${to}')" ${available === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
                             [BOOK] ZABRONIROVAT
                         </button>
@@ -661,6 +443,7 @@
 
         function selectBus(busId, date, from, to) {
             const bus = buses.find(b => b.id === busId);
+            storage.selectedBus = { ...bus, date, from, to };
             const isWeekend = [0, 6].includes(new Date(date).getDay());
             storage.selectedBus = { ...bus, date, from, to, price: Math.round(bus.price * (isWeekend ? 1.15 : 1)) };
             storage.selectedSeats = [];
@@ -701,79 +484,7 @@
                 <h2 style="font-size: 20px; margin: 20px 0;">[SELECT] VYBERITE MESTA:</h2>
                 <div class="legend">
                     <span class="legend-item">
-                        <span class="legend-box" style="background: rgba(0, 255, 0, 0.2); border-color: #00ff00;"></span>
-                        Svobodno
-                    </span>
-                    <span class="legend-item">
-                        <span class="legend-box" style="background: rgba(255, 0, 255, 0.3); border-color: #ff00ff;"></span>
-                        Zanyato
-                    </span>
-                    <span class="legend-item">
-                        <span class="legend-box" style="background: rgba(255, 255, 0, 0.4); border-color: #ffff00;"></span>
-                        Vybrano
-                    </span>
-                </div>
-                <div class="seat-grid" id="seatGrid"></div>
-                <div id="selectedInfo"></div>
-            `;
-
-            const grid = document.getElementById('seatGrid');
-            const takenSeats = getTakenSeats(bus.id, bus.date);
-
-            for (let i = 1; i <= 40; i++) {
-                const seat = document.createElement('div');
-                seat.className = 'seat';
-                seat.textContent = i;
-                
-                if (takenSeats.includes(i)) {
-                    seat.classList.add('taken');
-                } else {
-                    seat.onclick = () => toggleSeat(i);
-                }
-                
-                grid.appendChild(seat);
-            }
-
-            updateSelectedInfo();
-        }
-
-        function toggleSeat(seatNum) {
-            const idx = storage.selectedSeats.indexOf(seatNum);
-            if (idx > -1) {
-                storage.selectedSeats.splice(idx, 1);
-            } else {
-                storage.selectedSeats.push(seatNum);
-            }
-            
-            document.querySelectorAll('.seat').forEach(s => {
-                const num = parseInt(s.textContent);
-                if (storage.selectedSeats.includes(num)) {
-                    s.classList.add('selected');
-                } else if (!s.classList.contains('taken')) {
-                    s.classList.remove('selected');
-                }
-            });
-            
-            updateSelectedInfo();
-        }
-
-        function updateSelectedInfo() {
-            const info = document.getElementById('selectedInfo');
-            if (storage.selectedSeats.length > 0) {
-                const total = storage.selectedSeats.length * storage.selectedBus.price;
-                info.innerHTML = `
-                    <div class="summary">
-                        <h3>[SELECTED] VYBRANNYE MESTA</h3>
-                        <div class="summary-item">
-                            <span>Mesta:</span>
-                            <strong>${storage.selectedSeats.sort((a,b) => a-b).join(', ')}</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Kolichestvo:</span>
-                            <strong>${storage.selectedSeats.length}</strong>
-                        </div>
-                        <div class="summary-item">
-                            <span>Tsena za mesto:</span>
+@@ -762,88 +777,92 @@
                             <strong>${storage.selectedBus.price.toLocaleString()} UZS</strong>
                         </div>
                         <div class="total">
@@ -828,18 +539,22 @@
                 <h2 style="font-size: 20px; margin: 20px 0;">[PASSENGER] DANNYE PASSAZHIRA</h2>
                 <div class="form-group">
                     <label>[NAME] IMYA:</label>
+                    <input type="text" id="firstName" placeholder="Vvedite imya">
                     <input type="text" id="firstName" placeholder="Vvedite imya" required>
                 </div>
                 <div class="form-group">
                     <label>[SURNAME] FAMILIYA:</label>
+                    <input type="text" id="lastName" placeholder="Vvedite familiyu">
                     <input type="text" id="lastName" placeholder="Vvedite familiyu" required>
                 </div>
                 <div class="form-group">
                     <label>[PHONE] TELEFON:</label>
+                    <input type="tel" id="phone" placeholder="+998 XX XXX XX XX">
                     <input type="tel" id="phone" placeholder="+998 XX XXX XX XX" required>
                 </div>
                 <div class="form-group">
                     <label>[PASSPORT] SERIYA I NOMER PASPORTA:</label>
+                    <input type="text" id="passport" placeholder="AA 1234567">
                     <input type="text" id="passport" placeholder="AA 1234567" required>
                 </div>
 
@@ -866,24 +581,7 @@
         }
 
         function processPayment() {
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const phone = document.getElementById('phone').value;
-            const passport = document.getElementById('passport').value;
-            const cardNumber = document.getElementById('cardNumber').value;
-
-            if (!firstName || !lastName || !phone || !passport || cardNumber.length < 10) {
-                alert('Pozhaluista, zapolnite vse polya!');
-                return;
-            }
-
-            storage.passengerData = { firstName, lastName, phone, passport };
-
-            const content = document.getElementById('paymentContent');
-            content.innerHTML = `
-                <div class="processing">
-                    <h2 class="blink">[PROCESSING] OBRABOTKA PLATEZHA...</h2>
-                    <div style="font-family: 'VT323', monospace; font-size: 24px; margin-top: 20px; color: #00ffff;">
+@@ -868,92 +887,95 @@
                         Pozhaluista, podozhdite
                     </div>
                 </div>
@@ -953,6 +651,7 @@
                 return;
             }
 
+            content.innerHTML = '<h2 style="font-size: 22px; margin-bottom: 20px; color: #00ffff;">[MY TICKETS] VASHI BILETY:</h2>';
             content.innerHTML = '<h2 style="font-size: 22px; margin-bottom: 20px; color: #00ffff;">[MY TICKETS] VASHI BILETY:</h2><button class="btn-y2k" onclick="clearTicketHistory()">[CLEAR] OCHISTIT ISTORIYU</button>';
 
             storage.tickets.forEach(ticket => {
@@ -979,14 +678,7 @@
                                 <td>${ticket.bus.time}</td>
                             </tr>
                             <tr>
-                                <td>Kompaniya</td>
-                                <td>${ticket.bus.company}</td>
-                            </tr>
-                            <tr>
-                                <td>Passazhir</td>
-                                <td>${ticket.passenger.firstName} ${ticket.passenger.lastName}</td>
-                            </tr>
-                            <tr>
+@@ -968,29 +990,78 @@
                                 <td>Pasport</td>
                                 <td>${ticket.passenger.passport}</td>
                             </tr>
