@@ -565,7 +565,7 @@
             selectedBus: null,
             selectedSeats: [],
             passengerData: null,
-            tickets: []
+            tickets: JSON.parse(localStorage.getItem('tickets_history') || '[]')
         };
 
         const buses = [
@@ -574,6 +574,10 @@
             { id: 3, time: '15:00', duration: '4ch 45min', price: 42000, seats: 40, company: 'Silk Road Bus' },
             { id: 4, time: '19:00', duration: '4ch 20min', price: 48000, seats: 40, company: 'Central Asia Lines' }
         ];
+
+        function persistTickets() {
+            localStorage.setItem('tickets_history', JSON.stringify(storage.tickets));
+        }
 
         // --- NEW LOCAL STORAGE LOGIC ---
         function getTakenSeats(busId, date) {
@@ -627,7 +631,8 @@
             const results = document.getElementById('busResults');
             results.innerHTML = '<h2 style="font-size: 20px; margin: 30px 0; color: #00ffff;">[RESULTS] DOSTUPNYE REISY:</h2>';
 
-            buses.forEach(bus => {
+            const sortedBuses = [...buses].sort((a, b) => a.price - b.price);
+            sortedBuses.forEach(bus => {
                 const booked = getTakenSeats(bus.id, date);
                 const available = bus.seats - booked.length;
                 
@@ -641,7 +646,7 @@
                         <div class="bus-info">>>> Vremya v puti: ${bus.duration}</div>
                         <div class="bus-info">>>> Svobodnykh mest: ${available}/${bus.seats}</div>
                         <div class="bus-info">>>> Marshrut: ${from} -> ${to}</div>
-                        <button class="btn-y2k" onclick="selectBus(${bus.id}, '${date}', '${from}', '${to}')">
+                        <button class="btn-y2k" onclick="selectBus(${bus.id}, '${date}', '${from}', '${to}')" ${available === 0 ? 'disabled style="opacity:0.5;cursor:not-allowed;"' : ''}>
                             [BOOK] ZABRONIROVAT
                         </button>
                     </div>
@@ -661,6 +666,10 @@
         function renderSeatSelection() {
             const content = document.getElementById('bookingContent');
             const bus = storage.selectedBus;
+            if (!bus) {
+                content.innerHTML = '<p style="font-family: VT323, monospace; font-size: 24px;">Snachala vyberite reis na stranitse poiska.</p>';
+                return;
+            }
             
             content.innerHTML = `
                 <div class="summary">
@@ -784,6 +793,10 @@
 
         function renderPaymentForm() {
             const content = document.getElementById('paymentContent');
+            if (!storage.selectedBus || storage.selectedSeats.length === 0) {
+                content.innerHTML = '<p style="font-family: VT323, monospace; font-size: 24px;">Snachala vyberite mesta na predydushchem etape.</p>';
+                return;
+            }
             const total = storage.selectedSeats.length * storage.selectedBus.price;
 
             content.innerHTML = `
@@ -809,19 +822,19 @@
                 <h2 style="font-size: 20px; margin: 20px 0;">[PASSENGER] DANNYE PASSAZHIRA</h2>
                 <div class="form-group">
                     <label>[NAME] IMYA:</label>
-                    <input type="text" id="firstName" placeholder="Vvedite imya">
+                    <input type="text" id="firstName" placeholder="Vvedite imya" required>
                 </div>
                 <div class="form-group">
                     <label>[SURNAME] FAMILIYA:</label>
-                    <input type="text" id="lastName" placeholder="Vvedite familiyu">
+                    <input type="text" id="lastName" placeholder="Vvedite familiyu" required>
                 </div>
                 <div class="form-group">
                     <label>[PHONE] TELEFON:</label>
-                    <input type="tel" id="phone" placeholder="+998 XX XXX XX XX">
+                    <input type="tel" id="phone" placeholder="+998 XX XXX XX XX" required>
                 </div>
                 <div class="form-group">
                     <label>[PASSPORT] SERIYA I NOMER PASPORTA:</label>
-                    <input type="text" id="passport" placeholder="AA 1234567">
+                    <input type="text" id="passport" placeholder="AA 1234567" required>
                 </div>
 
                 <h2 style="font-size: 20px; margin: 20px 0;">[DEMO] SPOSOB OPLATY (DEMO)</h2>
@@ -890,6 +903,7 @@
             };
 
             storage.tickets.push(ticket);
+            persistTickets();
 
             const content = document.getElementById('paymentContent');
             content.innerHTML = `
@@ -908,6 +922,8 @@
                     </button>
                 </div>
             `;
+            storage.selectedSeats = [];
+            storage.selectedBus = null;
         }
 
         function viewTickets() {
@@ -931,7 +947,7 @@
                 return;
             }
 
-            content.innerHTML = '<h2 style="font-size: 22px; margin-bottom: 20px; color: #00ffff;">[MY TICKETS] VASHI BILETY:</h2>';
+            content.innerHTML = '<h2 style="font-size: 22px; margin-bottom: 20px; color: #00ffff;">[MY TICKETS] VASHI BILETY:</h2><button class="btn-y2k" onclick="clearTicketHistory()">[CLEAR] OCHISTIT ISTORIYU</button>';
 
             storage.tickets.forEach(ticket => {
                 content.innerHTML += `
@@ -990,7 +1006,34 @@
             });
         }
 
+        function clearTicketHistory() {
+            if (!confirm('Ochistit vsu istoriyu biletov?')) return;
+            storage.tickets = [];
+            persistTickets();
+            displayTickets();
+        }
+
         document.getElementById('date').valueAsDate = new Date();
+
+        document.addEventListener('input', (event) => {
+            if (event.target.id === 'phone') {
+                event.target.value = event.target.value.replace(/[^\d+]/g, '').slice(0, 13);
+            }
+            if (event.target.id === 'passport') {
+                event.target.value = event.target.value.toUpperCase().replace(/[^A-Z0-9 ]/g, '').slice(0, 10);
+            }
+            if (event.target.id === 'cardNumber') {
+                const digits = event.target.value.replace(/\D/g, '').slice(0, 16);
+                event.target.value = digits.replace(/(\d{4})(?=\d)/g, '$1 ').trim();
+            }
+            if (event.target.id === 'cardExpiry') {
+                const digits = event.target.value.replace(/\D/g, '').slice(0, 4);
+                event.target.value = digits.length > 2 ? `${digits.slice(0, 2)}/${digits.slice(2)}` : digits;
+            }
+            if (event.target.id === 'cardCvv') {
+                event.target.value = event.target.value.replace(/\D/g, '').slice(0, 3);
+            }
+        });
     </script>
 </body>
 </html>
